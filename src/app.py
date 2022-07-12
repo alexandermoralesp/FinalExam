@@ -13,4 +13,4 @@ csrf.init_app(app)
 @app.route("/")
 def index():
     number = secrets.randbelow(10)
-    return "Testing, Flask!"
+    return f"Testing, Flask! {number}"
