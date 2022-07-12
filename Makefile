@@ -5,4 +5,4 @@ install:
 test:
 	pytest
 test.coverage:
-	pytest --cov=. --cov-report=html --cov-branch tests/
+	pytest --cov=. --cov-report=xml --cov-branch tests/

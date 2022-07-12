@@ -1,5 +1,6 @@
-from src.app import getMyApp
+from src.app import app
 
-
-def test_get_my_app():
-    assert getMyApp(), "This is my application"
+def test_index():
+    response = app.test_client().get("/")
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == 'Testing, Flask!'
