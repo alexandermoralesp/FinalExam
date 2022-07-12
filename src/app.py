@@ -14,5 +14,3 @@ csrf.init_app(app)
 def index():
     number = secrets.randbelow(10)
     return "Testing, Flask!"
-    # return f"<h1>{number}</h1>"
-app.run()
