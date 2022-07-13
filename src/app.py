@@ -1,7 +1,6 @@
 # Import dependencies
 from cairo import Status
-from flask import Flask, request
-from httplib2 import Response, jsonify
+from flask import Flask, request, Response, jsonify
 from flask_wtf.csrf import CSRFProtect
 import json
 # Set global app
@@ -10,6 +9,11 @@ app = Flask(__name__)
 # Set security flask
 csrf = CSRFProtect()
 csrf.init_app(app)
+
+# General data information (Hash)
+"""
+If you want to access data of topic, the complexity is O(1)
+"""
 temp_info = {}
 
 @app.route("/message/<str:topic>", methods=["GET"])
@@ -30,3 +34,6 @@ def post_message():
             temp_info[topic].append(message)
         return Response(status=200, message="ok")
     return Response(status=400, message="fail")
+
+if __name__ == "__main__":
+    app.run()
