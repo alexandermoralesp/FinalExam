@@ -7,8 +7,8 @@ import json
 app = Flask(__name__)
 
 # Set security flask
-csrf = CSRFProtect()
-csrf.init_app(app)
+# csrf = CSRFProtect()
+# csrf.init_app(app)
 
 # General data information (Hash)
 """
@@ -24,8 +24,7 @@ def index():
 def get_message(topic):
     if topic not in temp_info:
         return jsonify({"status": "fail"}), 400
-    data = request.data
-    return data, 200
+    return jsonify(temp_info[topic]), 200
 
 @app.route("/message", methods=["POST"])
 def post_message():
@@ -37,7 +36,9 @@ def post_message():
             temp_info[topic] = [message]
         else:
             temp_info[topic].append(message)
+        print(temp_info)
         return jsonify({"status": "ok"}), 200
-    return jsonify({"status": "ok"}), 400
+    print(temp_info)
+    return jsonify({"status": "fail"}), 400
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
