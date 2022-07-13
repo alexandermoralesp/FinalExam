@@ -5,7 +5,10 @@ def test_index():
     assert response.data.decode('utf-8') == 'Hello world'
 
 def test_message_post():
-    pass
+    response = app.test_client().post("/message", data={
+        "ping": "pong"
+    })
+    assert response.status_code, 200
 
 def test_message_get():
     response = app.test_client().get("/message/hello")

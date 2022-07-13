@@ -14,16 +14,18 @@ app = Flask(__name__)
 """
 If you want to access data of topic, the complexity is O(1)
 """
-temp_info = {}
+temp_info = {
+    "ping": ["pong"]
+}
 @app.route("/")
 def index():
     return "Hello world"
 @app.route("/message/<topic>", methods=["GET"])
 def get_message(topic):
     if topic not in temp_info:
-        return Response(status=400)
+        return jsonify({"status": "fail"}), 400
     data = request.data
-    return jsonify(data), 200
+    return data, 200
 
 @app.route("/message", methods=["POST"])
 def post_message():
