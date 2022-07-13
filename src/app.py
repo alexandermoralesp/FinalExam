@@ -1,4 +1,5 @@
 # Import dependencies
+from urllib import response
 from flask import Flask, request, Response, jsonify
 from flask_wtf.csrf import CSRFProtect
 import json
@@ -6,8 +7,8 @@ import json
 app = Flask(__name__)
 
 # Set security flask
-csrf = CSRFProtect()
-csrf.init_app(app)
+# csrf = CSRFProtect()
+# csrf.init_app(app)
 
 # General data information (Hash)
 """
@@ -20,8 +21,9 @@ def index():
 @app.route("/message/<topic>", methods=["GET"])
 def get_message(topic):
     if topic not in temp_info:
-        return Response(status=400,message="fail")
-    return Response(jsonify(temp_info[topic]), 200)
+        return Response(status=400)
+    data = request.data
+    return jsonify(data), 200
 
 @app.route("/message", methods=["POST"])
 def post_message():
@@ -33,8 +35,7 @@ def post_message():
             temp_info[topic] = [message]
         else:
             temp_info[topic].append(message)
-        return Response(status=200, message="ok")
-    return Response(status=400, message="fail")
-
+        return jsonify({"status": "ok"}), 200
+    return jsonify({"status": "ok"}), 400
 if __name__ == "__main__":
     app.run(port=8080, debug=True)
