@@ -1,5 +1,4 @@
 # Import dependencies
-from cairo import Status
 from flask import Flask, request, Response, jsonify
 from flask_wtf.csrf import CSRFProtect
 import json
@@ -15,8 +14,10 @@ csrf.init_app(app)
 If you want to access data of topic, the complexity is O(1)
 """
 temp_info = {}
-
-@app.route("/message/<str:topic>", methods=["GET"])
+@app.route("/")
+def index():
+    return "Hello world"
+@app.route("/message/<topic>", methods=["GET"])
 def get_message(topic):
     if topic not in temp_info:
         return Response(status=400,message="fail")
@@ -36,4 +37,4 @@ def post_message():
     return Response(status=400, message="fail")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=8080, debug=True)
